@@ -13,7 +13,7 @@ def status(user):
     #pull all user stats into a string
     status = str(user.__dict__)
     #Print it nicely, multi-lined
-    print(status.replace(",", "\n").strip("{").strip("}"))
+    print(status.replace(",", "\n").strip("{").strip("}"), "\n")
     
 def level_up(user):
     print(DEC)
@@ -44,14 +44,23 @@ def travel_map(map_number, desc_number, dungeon):
         choice = input("What do you do?\n")
         #Incorrect choice, plus random encounter chance
         if map_number[i] not in choice:
+            if random_encounter() == 0:
+                pass
+                
+            else:
+                pass
+                #begin_battle(user, creatures)
             print("Cannot {}, please try again.\n".format(choice))
-            random_encounter()
         #Correct answer + random encounter chance
         else:
             clear(0)
+            if random_encounter() == 0:
+                pass
+            else:
+                pass
+                #begin_battle(user, creatures)
             print(desc_number[i])
             i += 1
-            random_encounter()
         #if correct choice counter equals map size, you win
         if i == len(map_number):
             print("Congratulations, Dungeon {} complete!".format(dungeon))
@@ -61,7 +70,7 @@ def random_encounter():
     #chance of encounter - random number between 1-100
     chance = random.randrange(1, 100)
     if chance < 75: # 25% chance of encounter
-        pass
+        return 0
     else:
         import creatures
         monster_type = random.randrange(1,10)
@@ -75,6 +84,9 @@ def random_encounter():
             monster = creatures.Giant
         print("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
         status(monster)
+        #begin_battle(user, creature)
+
+#def begin_battle(user, creature)
 
 def achievement(user, exp, message):
     print(DEC)
