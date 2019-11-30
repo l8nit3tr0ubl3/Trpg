@@ -10,6 +10,6 @@ class Monster():
         self.gil = gil
 
 Troll = Monster("Troll", 1, "Small Axe", 1, 1)
-Elf = Monster("Elf", 3, "Bow", 5)
+Elf = Monster("Elf", 3, "Bow", 1, 5)
 Dwarf = Monster("Dwarf", 5, "Battle Axe", 1, 10)
 Giant = Monster("Giant", 10, "Massive Boulder", 1, 100)

@@ -63,7 +63,18 @@ def random_encounter():
     if chance < 75: # 25% chance of encounter
         pass
     else:
-        print("Monster Encounter!!!")
+        import creatures
+        monster_type = random.randrange(1,10)
+        if monster_type < 5:
+            monster = creatures.Troll
+        elif monster_type > 5 and monster_type < 7:
+            monster = creatures.Elf
+        elif monster_type > 7 and monster_type < 9:
+            monster = creatures.Dwarf
+        else:
+            monster = creatures.Giant
+        print("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
+        status(monster)
 
 def achievement(user, exp, message):
     print(DEC)
