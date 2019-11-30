@@ -21,6 +21,10 @@ def level_up(user):
     user.lvl += 1
     print("You are now level {}".format(user.lvl))
     print(DEC)
+    incrementing_stats = ['health', 'attack']
+    for stat in user.__dict__:
+        if stat in incrementing_stats:
+            stat *= user.lvl
     status(user)
     print(DEC, "\n")
     
