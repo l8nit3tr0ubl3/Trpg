@@ -37,32 +37,27 @@ def clear(time):
     else: 
         _ = system('clear')
 
+def show_image(picture):#########FIX ME
+    import matplotlib.pyplot as plot
+    import matplotlib.image as image
+    read = image.imread(picture)
+    plot.imshow(read)
 ###########################################################
 # Game core functions
 ###########################################################
-def travel_map(map_number, desc_number, dungeon):
+def travel_map(user, map_number, desc_number, dungeon):
     i = 0 #counter
     y = 0
     #Loop until correct steps # >= length of map
     while i <= len(map_number):
         choice = input("What do you do?\n")
+        random_encounter(user)
         #Incorrect choice, plus random encounter chance
         if map_number[i] not in choice:
-            if random_encounter() == 0:
-                pass
-                
-            else:
-                pass
-                #begin_battle(user, creatures)
+            pass
             print("Cannot {}, please try again.\n".format(choice))
         #Correct answer + random encounter chance
         else:
-            clear(0)
-            if random_encounter() == 0:
-                pass
-            else:
-                pass
-                #begin_battle(user, creatures)
             print(desc_number[i])
             i += 1
         #if correct choice counter equals map size, you win
@@ -70,7 +65,7 @@ def travel_map(map_number, desc_number, dungeon):
             print("Congratulations, Dungeon {} complete!".format(dungeon))
             break
 
-def random_encounter():
+def random_encounter(user):
     #chance of encounter - random number between 1-100
     chance = random.randrange(1, 100)
     if chance < 75: # 25% chance of encounter
@@ -100,3 +95,5 @@ def achievement(user, exp, message):
     user.exp += exp
     #Display total
     print("Total Experience: {}".format(user.exp))
+    if user.exp % 10 == 0 or (user.exp > 100 and user.exp % 100 == 0):
+        level_up(user)
