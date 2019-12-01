@@ -103,7 +103,7 @@ def random_encounter(user):
     """Call creature battles randomly"""
     #chance of encounter - random number between 1-100
     chance = random.randrange(1, 100)
-    if chance < 75: # 25% chance of encounter
+    if chance < 65: # 35% chance of encounter
         monster = 0
     else:
         monster_type = random.randrange(1, 10)
@@ -120,11 +120,10 @@ def random_encounter(user):
         monster.gil *= int(user.lvl * 1.2)
         monster.attack *= int(user.lvl * 1.2)
         monster.health *= int(user.lvl * 1.2)
-        stay = user_input("Run, or fight the {}?".format(monster.species).lower())
+        stay = user_input("Run, or fight the {}?\n".format(monster.species).lower())
         if stay == 'run':
             return
-        if stay == 'fight':
-            begin_battle(user, monster)
+        begin_battle(user, monster)
 
 def attack_chance():
     """Whether attack hits or misses"""
@@ -144,7 +143,7 @@ def begin_battle(user, creature):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
             if chance == 1:
-                print("Troll hits you for {} damage".format(creature.attack))
+                print("{} hits you for {} damage".format(creature.species, creature.attack))
                 user.health -= creature.attack
                 turn_counter += 1
             else:
@@ -168,7 +167,6 @@ def begin_battle(user, creature):
             break
     user.health = health_reset
     creature.health = creature_reset
-    status(user)
     clear(6)
 
 def achievement(user, exp, message):
