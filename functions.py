@@ -8,7 +8,8 @@ import matplotlib.pyplot as plot
 import matplotlib.image as image
 import creatures
 
-
+DIRECTIONS = ["left", "right", "forward", "backward"]
+COMMANDS = ["walk", "look", "fight", "grab", "unlock"]
 DEC = "-------------------------------------------------"
 ###########################################################
 # System functions
@@ -47,27 +48,47 @@ def show_image(picture):#########FIX ME
     """Display images to user"""
     read = image.imread(picture)
     plot.imshow(read)
+
+def user_input(message):
+    """Get and sanitize user input"""
+    ask_user = input(message).split()
+    command = ask_user[0].lower()
+    if command in COMMANDS:
+        pass
+    else:
+        print("Command {} not acceptable.".format(command))
+    direction = ask_user[1].lower()
+    if direction in DIRECTIONS:
+        pass
+    else:
+        print("Direction {} not acceptable.".format(direction))
+    return ask_user
+
 ###########################################################
 # Game core functions
 ###########################################################
 def travel_map(user, map_number, desc_number):
     """Loop through map directions, csalling encounters"""
+    message = "What do you do?\n"
     square_counter = 0 #counter
     #Loop until correct steps # >= length of map
     while square_counter < len(map_number):
-        choice = input("What do you do?\n")
+        choice = user_input(message)
+        random_encounter()
         #Incorrect choice, plus random encounter chance
-        if map_number[square_counter] not in choice:
+        if map_number[square_counter] not in choice[1].strip("'").strip("[").strip("]"):
+            clear(3)
             print("Cannot {}, please try again.\n".format(choice))
         #Correct answer + random encounter chance
         else:
+            clear(3)
             print(desc_number[square_counter], "\n")
             square_counter += 1
         #if correct choice counter equals map size, you win
         if square_counter == len(map_number) - 1:
-            print("Congratulations, Dungeon {} complete!".format(map_number[-1:].strip("'"))
+            print("Congratulations, Dungeon {} complete!".format(map_number[-1:]).strip("'"))
             break
-        random_encounter()
+    del message
 
 def random_encounter():#user):
     """Call creature battles randomly"""

@@ -7,39 +7,34 @@ import maps
 import character_classes as CC
 import functions as func
 
-#Global variables/constants
-DEC = "-------------------------------------------------"
-DIRECTIONS = ["Left", "Right", "Forward", "Backward"]
-ACTIONS = ["Walk", "Look", "Fight", "Grab", "Unlock"]
-
 #Welcome screen
-print(DEC)
+print(func.DEC)
 print("Welcome to 'PLACEHOLDER NAME' fantasy rpg.\n")
 print("You have multiple choices in this adventure,")
 print("and each has its benefits or consquences.")
-print(DEC)
+print(func.DEC)
 func.clear(3) #Clear screen for nicer USER readability
 #
 #func.show_image("pic.png")
 #func.clear(10)
 #
 #Print instructions
-print(DEC)
+print(func.DEC)
 print("""
 Within this game, commands consist of an action
 and an object, direction, person or monster.
 
-Directions: L(l)eft, R(r)ight, F(f)orward, B(b)ackward
-Actions: Walk, Look, Fight, Grab, Unlock
+Directions: left, right, forward, backward
+Commands: walk, look, fight, grab, unlock
 """)
-print(DEC)
+print(func.DEC)
 input("Press enter to continue......")
 func.clear(0)
 
 #Title
-print(DEC)
+print(func.DEC)
 print("Character Classes.")
-print(DEC)
+print(func.DEC)
 
 #Show character menu
 print("#", "Job   ", "Ability", "Health", "Attack", "Exp", "LVL", "Gil")
@@ -68,8 +63,8 @@ USER.name = input("Please enter your name.\n")
 func.clear(0)
 
 #Show chosen charcter type and name
-print(DEC)
-print("{}, you have chosen {} as your job type.".format(USER.name, USER.job), "\n"+DEC)
+print(func.DEC)
+print("{}, you have chosen {} as your job type.".format(USER.name, USER.job), "\n"+func.DEC)
 
 #First achievement
 func.achievement(USER, 1, "Begin Your Journey!")
@@ -87,7 +82,7 @@ You step outside, and see a path leading forward.
 """)
 #Loop through user input untill map is cleared
 func.travel_map(USER, maps.map1, maps.desc1)
-func.clear(10)
+func.clear(6)
 
 #Second achievement
 MESSAGE = "First Dungeon Complete!"
