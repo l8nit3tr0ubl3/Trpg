@@ -11,7 +11,7 @@ import creatures
 
 DIRECTIONS = ["left", "right", "forward", "backward"]
 COMMANDS = ["walk", "look", "fight", "grab", "unlock"]
-BATTLE_COMMANDS = ["run", "fight"]
+BATTLE_COMMANDS = ["run", "fight", "attack"]
 DEC = "-------------------------------------------------"
 ###########################################################
 # System functions
@@ -150,6 +150,10 @@ def begin_battle(user, creature):
                 print("{} missed you.".format(creature.species))
                 turn_counter += 1
         elif turn_counter % 2 == 0:  #user attack
+            if user_input("Attack or run?\n".lower()) == "run":
+                break
+            else:
+                pass
             if chance == 1:
                 print("You hit the {} for {} damage.".format(creature.species, user.attack))
                 creature.health -= 1
@@ -157,7 +161,6 @@ def begin_battle(user, creature):
             else:
                 print("You missed {}.".format(creature.species))
                 turn_counter += 1
-        sleep(0.5)
         if user.health <= 0:
             print("You have been beaten, the world goes dark.")
             print("You have lost the game.")
@@ -167,6 +170,7 @@ def begin_battle(user, creature):
             break
     user.health = health_reset
     creature.health = creature_reset
+    turn_counter = 0
     clear(6)
 
 def achievement(user, exp, message):
