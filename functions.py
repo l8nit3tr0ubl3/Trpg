@@ -11,6 +11,7 @@ import creatures
 
 DIRECTIONS = ["left", "right", "forward", "backward"]
 COMMANDS = ["walk", "look", "fight", "grab", "unlock"]
+BATTLE_COMMANDS = ["run", "fight"]
 DEC = "-------------------------------------------------"
 ###########################################################
 # System functions
@@ -53,17 +54,24 @@ def show_image(picture):#########FIX ME
 def user_input(message):
     """Get and sanitize user input"""
     ask_user = input(message).split()
-    command = ask_user[0].lower()
-    if command in COMMANDS:
-        pass
-    else:
-        print("Command {} not acceptable.".format(command))
-    direction = ask_user[1].lower()
-    if direction in DIRECTIONS:
-        pass
-    else:
-        print("Direction {} not acceptable.".format(direction))
-    return ask_user
+    if len(ask_user) > 1:
+        command = ask_user[0].lower()
+        if command in COMMANDS:
+            pass
+        else:
+            print("Command {} not acceptable.".format(command))
+        direction = ask_user[1].lower()
+        if direction in DIRECTIONS:
+            pass
+        else:
+            print("Direction {} not acceptable.".format(direction))
+        return ask_user
+    elif len(ask_user) == 1:
+        command = ask_user[0].lower()
+        if command in BATTLE_COMMANDS:
+            pass
+        else:
+            print("Command {} not acceptable.".format(command))
 
 ###########################################################
 # Game core functions
@@ -112,7 +120,11 @@ def random_encounter(user):
         monster.gil *= int(user.lvl * 1.2)
         monster.attack *= int(user.lvl * 1.2)
         monster.health *= int(user.lvl * 1.2)
-        begin_battle(user, monster)
+        stay = user_input("Run, or fight the {}?".format(monster.species).lower())
+        if stay == 'run':
+            return
+        if stay == 'fight':
+            begin_battle(user, monster)
 
 def attack_chance():
     """Whether attack hits or misses"""
