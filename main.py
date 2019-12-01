@@ -106,4 +106,5 @@ func.clear(4)
 ####################################################
 print("You have reached the end of the game so far.")
 print("Please wait for updates.")
+func.status(USER)
 func.clear(25)

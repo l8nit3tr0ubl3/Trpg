@@ -70,7 +70,7 @@ def user_input(message):
 # Game core functions
 ###########################################################
 def travel_map(user, map_number, desc_number):
-    """Loop through map directions, csalling encounters"""
+    """Loop through map directions, calling encounters"""
     message = "What do you do?\n"
     square_counter = 0 #counter
     #Loop until correct steps # >= length of map
@@ -125,5 +125,5 @@ def achievement(user, exp, message):
     user.exp += exp
     #Display total
     print("Total Experience: {}".format(user.exp))
-    if user.exp >= (10 * user.lvl):
+    if user.exp >= int((10 * user.lvl) * (1.2 * user.lvl)): #leveling algo
         level_up(user)
