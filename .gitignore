@@ -1,0 +1,4 @@
+Trpg.exe
+build/*
+dist/*
+__/pycache__/*
