@@ -57,11 +57,13 @@ def user_input(message):
         pass
     else:
         print("Command {} not acceptable.".format(command))
+        assert "Try again."
     direction = ask_user[1].lower()
     if direction in DIRECTIONS:
         pass
     else:
         print("Direction {} not acceptable.".format(direction))
+        assert "Try again."
     return ask_user
 
 ###########################################################
@@ -76,7 +78,7 @@ def travel_map(user, map_number, desc_number):
         choice = user_input(message)
         random_encounter()
         #Incorrect choice, plus random encounter chance
-        if map_number[square_counter] not in choice[1].strip("'").strip("[").strip("]"):
+        if map_number[square_counter] != choice[1].strip("'").strip("[").strip("]"):
             clear(3)
             print("Cannot {}, please try again.\n".format(choice))
         #Correct answer + random encounter chance
@@ -123,5 +125,5 @@ def achievement(user, exp, message):
     user.exp += exp
     #Display total
     print("Total Experience: {}".format(user.exp))
-    if user.exp % 10 == 0 or (user.exp > 100 and user.exp % 100 == 0):
+    if user.exp >= (10 * user.lvl):
         level_up(user)

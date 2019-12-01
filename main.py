@@ -70,10 +70,6 @@ print("{}, you have chosen {} as your job type.".format(USER.name, USER.job), "\
 func.achievement(USER, 1, "Begin Your Journey!")
 func.clear(4)
 
-#Print level up screen and stats
-func.level_up(USER)
-func.clear(6)
-
 #Print start of game
 print("""
 You wake up in a dark cave. Sore, bleeding, and dizzy you stand up. You have no memory
