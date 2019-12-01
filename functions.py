@@ -76,7 +76,7 @@ def travel_map(user, map_number, desc_number):
     #Loop until correct steps # >= length of map
     while square_counter < len(map_number) - 1:
         choice = user_input(message)
-        random_encounter()
+        random_encounter(user)
         #Incorrect choice, plus random encounter chance
         if map_number[square_counter] != choice[1].strip("'").strip("[").strip("]"):
             clear(3)
@@ -92,7 +92,7 @@ def travel_map(user, map_number, desc_number):
             break
     del message
 
-def random_encounter():#user):
+def random_encounter(user):
     """Call creature battles randomly"""
     #chance of encounter - random number between 1-100
     chance = random.randrange(1, 100)
@@ -109,9 +109,13 @@ def random_encounter():#user):
         else:
             monster = creatures.Giant
         print("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
+        monster.lvl *= int(user.lvl * 1.2)
+        monster.gil *= int(user.lvl * 1.2)
+        monster.attack *= int(user.lvl * 1.2)
+        monster.health *= int(user.lvl * 1.2)
         status(monster)
     return monster
-        #begin_battle(user, creature)
+        #begin_battle(user, monster)
 
 #def begin_battle(user, creature)
 
