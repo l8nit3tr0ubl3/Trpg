@@ -57,13 +57,11 @@ def user_input(message):
         pass
     else:
         print("Command {} not acceptable.".format(command))
-        assert "Try again."
     direction = ask_user[1].lower()
     if direction in DIRECTIONS:
         pass
     else:
         print("Direction {} not acceptable.".format(direction))
-        assert "Try again."
     return ask_user
 
 ###########################################################
@@ -113,11 +111,50 @@ def random_encounter(user):
         monster.gil *= int(user.lvl * 1.2)
         monster.attack *= int(user.lvl * 1.2)
         monster.health *= int(user.lvl * 1.2)
-        status(monster)
-    return monster
-        #begin_battle(user, monster)
+        begin_battle(user, monster)
 
-#def begin_battle(user, creature)
+def attack_chance():
+    hit = 0
+    chance = random.randrange(1, 100)
+    if chance < 65:
+        hit = 1
+    return hit
+
+def begin_battle(user, creature):
+    status(creature)
+    turn_counter = 1
+    health_reset = user.health
+    creature_reset = creature.health
+    while user.health > 0 or creature.health > 0:
+        chance = attack_chance()
+        if turn_counter % 2 != 0:  #creature attack
+            if chance == 1:
+                print("Troll hits you for {} damage".format(creature.attack))
+                user.health -= creature.attack
+                turn_counter += 1
+            else:
+                print("{} missed you.".format(creature.species))
+                turn_counter += 1
+        elif turn_counter % 2 == 0:  #user attack
+            if chance == 1:
+                print("You hit the {} for {} damage.".format(creature.species, user.attack))
+                creature.health -= 1
+                turn_counter += 1
+            else:
+                print("You missed {}.".format(creature.species))
+                turn_counter += 1
+        sleep(0.5)
+        if user.health <= 0:
+            print("You have been beaten, the world goes dark.")
+            print("You have lost the game.")
+            quit(0)
+        elif creature.health <= 0:
+            print("You have defeated the {}!".format(creature.species))
+            break
+    user.health = health_reset
+    creature.health = creature_reset
+    status(user)
+    clear(6)
 
 def achievement(user, exp, message):
     """Assign exp to an achievement, and call
