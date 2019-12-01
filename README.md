@@ -9,6 +9,6 @@
 -Multiple maps/dungeons  
 -Random creature encounters  
 -Random creature type per encounter  
--Automated battle sequences, random hit/miss chance  
+-Interactive battle sequences, random hit/miss chance  
 -Clear screen after each occurence for readability  
 -Skippable battles  
