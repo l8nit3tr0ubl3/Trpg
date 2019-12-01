@@ -86,12 +86,13 @@ of how you've gotten here.
 You step outside, and see a path leading forward.
 """)
 #Loop through user input untill map is cleared
-func.travel_map(USER, maps.map1, maps.desc1, "1")
+func.travel_map(USER, maps.map1, maps.desc1)
+func.clear(10)
 
 #Second achievement
-message = "First Dungeon Complete!"
-func.achievement(USER, 5, message)
-del message #Free up memory thats no longer used
+MESSAGE = "First Dungeon Complete!"
+func.achievement(USER, 5, MESSAGE)
+del MESSAGE #Free up memory thats no longer used
 func.clear(4)
 
 
