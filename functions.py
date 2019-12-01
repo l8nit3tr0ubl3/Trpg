@@ -4,6 +4,7 @@ Needed functions for main
 from os import system, name
 from time import sleep
 import random
+import sys
 import matplotlib.pyplot as plot
 import matplotlib.image as image
 import creatures
@@ -114,6 +115,7 @@ def random_encounter(user):
         begin_battle(user, monster)
 
 def attack_chance():
+    """Whether attack hits or misses"""
     hit = 0
     chance = random.randrange(1, 100)
     if chance < 65:
@@ -121,6 +123,7 @@ def attack_chance():
     return hit
 
 def begin_battle(user, creature):
+    """Automated battle sequences"""
     status(creature)
     turn_counter = 1
     health_reset = user.health
@@ -147,7 +150,7 @@ def begin_battle(user, creature):
         if user.health <= 0:
             print("You have been beaten, the world goes dark.")
             print("You have lost the game.")
-            quit(0)
+            sys.exit()
         elif creature.health <= 0:
             print("You have defeated the {}!".format(creature.species))
             break

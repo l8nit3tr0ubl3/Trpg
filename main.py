@@ -72,7 +72,7 @@ func.clear(4)
 
 #Print start of game
 print("""
-You wake up in a dark cave. Sore, bleeding, and dizzy you stand up. You have no memory
+You wake up in a dark forest. Sore, bleeding, and dizzy you stand up. You have no memory
 of how you've gotten here.
 You step outside, and see a path in front of you.
 """)
