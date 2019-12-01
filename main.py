@@ -78,7 +78,7 @@ func.clear(6)
 print("""
 You wake up in a dark cave. Sore, bleeding, and dizzy you stand up. You have no memory
 of how you've gotten here.
-You step outside, and see a path leading forward.
+You step outside, and see a path in front of you.
 """)
 #Loop through user input untill map is cleared
 func.travel_map(USER, maps.map1, maps.desc1)
@@ -90,6 +90,22 @@ func.achievement(USER, 5, MESSAGE)
 del MESSAGE #Free up memory thats no longer used
 func.clear(4)
 
+print("""
+After leaving the forest you follow a small path into a farm town.
+Walking about the town, you see a marketplace, and decide to steal
+an apple to sate your hunger.
+As you walk away eating the apple, a large angry looking troll grabs
+you by the hair and throws you to the ground.
+Not wanting to tempt fate, you run, and come upon a cave entrance.
+""")
+
+func.travel_map(USER, maps.map2, maps.desc2)
+func.clear(6)
+
+MESSAGE = "Second Dungeon Complete!"
+func.achievement(USER, 15, MESSAGE)
+del MESSAGE
+func.clear(4)
 
 ####################################################
 print("You have reached the end of the game so far.")

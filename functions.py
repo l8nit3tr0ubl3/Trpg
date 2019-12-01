@@ -72,7 +72,7 @@ def travel_map(user, map_number, desc_number):
     message = "What do you do?\n"
     square_counter = 0 #counter
     #Loop until correct steps # >= length of map
-    while square_counter < len(map_number):
+    while square_counter < len(map_number) - 1:
         choice = user_input(message)
         random_encounter()
         #Incorrect choice, plus random encounter chance
