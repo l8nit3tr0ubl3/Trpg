@@ -62,17 +62,20 @@ def user_input(message):
             pass
         else:
             print("Command {} not acceptable.".format(command))
+            ask_user = input(message).split()
         direction = ask_user[1].lower()
         if direction in DIRECTIONS:
             pass
         else:
             print("Direction {} not acceptable.".format(direction))
-    elif len(ask_user) == 1:
+            ask_user = input(message).split()
+    elif len(ask_user) < 2:
         command = ask_user[0].lower()
         if command in BATTLE_COMMANDS:
             pass
         else:
             print("Command {} not acceptable.".format(command))
+            ask_user = input(message).split()
     return ask_user
 
 def achievement(user, exp, gil, message):
@@ -80,7 +83,7 @@ def achievement(user, exp, gil, message):
     level up when needed"""
     print(DEC)
     #Show amount earned
-    print("You have gained +{} experience and {} gil! - {}".format(exp, gil, message))
+    print("You have gained +{} experience and {} gil!\n{}\n".format(exp, gil, message))
     #Add to total
     user.exp += exp
     user.gil += gil
@@ -100,6 +103,9 @@ def travel_map(user, map_number, desc_number):
     #Loop until correct steps # >= length of map
     while square_counter < len(map_number) - 1:
         choice = user_input(message)
+        if len(choice) < 2:
+            print("Incorrect option {}.".format(choice))
+            choice = user_input(message)
         random_encounter(user)
         #Incorrect choice, plus random encounter chance
         if map_number[square_counter] != choice[1].strip("'").strip("[").strip("]"):
@@ -154,7 +160,7 @@ def attack_chance():
 
 def begin_battle(user, creature):
     """Automated battle sequences"""
-    turn_counter = 1
+    first_attack = random.randrange(1,10)
     health_reset = user.health
     creature_reset = creature.health
     if user.lvl > 1:
@@ -165,8 +171,13 @@ def begin_battle(user, creature):
         user.health *= (user.lvl * 1.1)
         user.attack *= (user.lvl * 1.1)
     status(creature)
-    #run = 0
-    while (user.health > 0 or creature.health > 0): #and run != 1:
+    if first_attack < 7:
+        turn_counter = 2
+        print("You surprised the {} and attack first.".format(creature.species))
+    else:
+        turn_counter = 1
+        print("The {} got the drop on you and attacks first.".format(creature.species))
+    while (user.health > 0 or creature.health > 0):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
             if chance == 1:

@@ -28,7 +28,7 @@ print("4", CC.Knight.job, CC.Knight.ability, "", CC.Knight.health, " "*3,
       CC.Knight.attack, " "*4, CC.Knight.exp, " ", CC.Knight.lvl, " ", CC.Knight.gil)
 
 #Get USERs character choice and name
-_CLASS = input("Choose character class number")
+_CLASS = input("\nChoose character class number.\n")
 if _CLASS == "1":
     USER = CC.Cleric
 elif _CLASS == "2":
@@ -39,7 +39,7 @@ elif _CLASS == "4":
     USER = CC.Knight
 else:
     print("Incorrect value, try again.")
-USER.name = input("Please enter your name.\n")
+USER.name = input("\nPlease enter your name.\n")
 print(func.DEC)
 func.clear(0)
 
