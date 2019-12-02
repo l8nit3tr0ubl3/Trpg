@@ -150,7 +150,8 @@ def begin_battle(user, creature):
                 print("{} missed you.".format(creature.species))
                 turn_counter += 1
         elif turn_counter % 2 == 0:  #user attack
-            if user_input("Attack or run?\n".lower()) == "run":
+            option = user_input("Attack or run?\n".lower())
+            if option == "run":
                 break
             else:
                 pass

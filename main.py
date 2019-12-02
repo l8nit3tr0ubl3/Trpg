@@ -103,6 +103,24 @@ func.achievement(USER, 15, MESSAGE)
 del MESSAGE
 func.clear(4)
 
+print("""
+Your eyes burn slighlty as you exit the cave into the sun. Wiping
+the cobwebs and dirt from your clothes, you head off towards the
+next town.
+When approaching the gates, you encounter a man in a dark cloak.
+His face is hidden, and he makes you uneasy.
+'This town is a maze, and none who enter these gates emerge from
+the other side.'
+The gates swing open.....
+""")
+
+func.travel_map(USER, maps.map3, maps.desc3)
+func.clear(6)
+
+MESSAGE = "Third Dungeon Complete!"
+func.achievement(USER, 50, MESSAGE)
+del MESSAGE #Free up memory thats no longer used
+func.clear(4)
 ####################################################
 print("You have reached the end of the game so far.")
 print("Please wait for updates.")

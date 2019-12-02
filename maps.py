@@ -37,3 +37,27 @@ desc2 = ["As you enter the cave, you see a narrow path ahead.",
          "You see a gentle slope in front of you, and hear birds.",
          "There is an exit to your right.",
          ""]
+
+map3 = ["forward",
+        "right",
+        "forward",
+        "left",
+        "forward",
+        "right",
+        "forward",
+        "forward",
+        "left",
+        "3"]
+
+desc3 = ["""Entering the city, you see wreckage everywhere, carts are overturned
+and there are bodies littering the streets. Only right is available.""",
+         "You enter a tight alleyway.",
+         "The alley splits, left or right?"
+         """The alley ends, and opens up into a town circle. What once was
+a large statue is nothing but rubble.""",
+         """There is a man with a large sword in your path, scanning quickly,
+you see a small crevace beneath a building to your right.""",
+         "Crawling beneath the building, only forward is possible",
+         "You begin to see light ahead of you.",
+         "Sliding slowly out from the building, you see a field in front of you",
+         ""]
