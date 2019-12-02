@@ -14,6 +14,12 @@ DEC = "-------------------------------------------------"
 ###########################################################
 # System functions
 ###########################################################
+def output(message):
+    """Nicer output"""
+    print(DEC)
+    print(message)
+    print(DEC)
+
 def status(user):
     """pull all user stats into a string"""
     stats = str(user.__dict__)
@@ -172,11 +178,10 @@ def begin_battle(user, creature):
                 turn_counter += 1
         elif turn_counter % 2 == 0:  #user attack
             option = user_input("Attack or run?\n")
-            if "run" in option:
-                #run = 1
-                break
-            elif "attack" in option:
+            if "attack" in option:
                 pass
+            elif "run" in option:
+                break
             if chance == 1:
                 print("You hit the {} for {} damage.".format(creature.species, user.attack))
                 creature.health -= user.attack
