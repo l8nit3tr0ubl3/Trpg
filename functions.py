@@ -38,7 +38,7 @@ def level_up(user):
     incrementing_stats = ['health', 'attack']
     for stat in user.__dict__:
         if stat in incrementing_stats:
-            stat *= (user.lvl * 1.1)
+            stat *= int(float(user.lvl) * 1.1)
     status(user)
     print(DEC, "\n")
     return user
@@ -91,7 +91,7 @@ def achievement(user, exp, gil, message):
     print("Total Experience: {}".format(user.exp))
     print("Total Gil: {}".format(user.gil))
     print(DEC)
-    if user.exp >= int((10 * user.lvl) * (1.2 * user.lvl)): #leveling algo
+    if user.exp >= int((10 * user.lvl) * (int(1.2 * float(user.lvl)))): #leveling algo
         level_up(user)
 ###########################################################
 # Game core functions
@@ -164,12 +164,12 @@ def begin_battle(user, creature):
     health_reset = user.health
     creature_reset = creature.health
     if user.lvl > 1:
-        creature.lvl *= int(user.lvl * 1.2)
-        creature.gil *= int(user.lvl * 1.2)
-        creature.attack *= int(user.lvl * 1.2)
-        creature.health *= int(user.lvl * 1.2)
-        user.health *= (user.lvl * 1.1)
-        user.attack *= (user.lvl * 1.1)
+        creature.lvl *= int(float(user.lvl) * 1.2)
+        creature.gil *= int(float(user.lvl) * 1.2)
+        creature.attack *= int(float(user.lvl) * 1.2)
+        creature.health *= int(float(user.lvl) * 1.2)
+        user.health *= int(float(user.lvl) * 1.1)
+        user.attack *= int(float(user.lvl) * 1.1)
     status(creature)
     if first_attack < 7:
         turn_counter = 2
