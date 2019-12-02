@@ -61,13 +61,13 @@ def user_input(message):
             pass
         else:
             print("Direction {} not acceptable.".format(direction))
-        return ask_user
     elif len(ask_user) == 1:
         command = ask_user[0].lower()
         if command in BATTLE_COMMANDS:
             pass
         else:
             print("Command {} not acceptable.".format(command))
+    return ask_user
 
 def achievement(user, exp, gil, message):
     """Assign exp to an achievement, and call
@@ -134,7 +134,7 @@ def random_encounter(user):
         print("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
         print(DEC)
         stay = user_input("Run, or fight the {}?\n".format(monster.species).lower())
-        if stay == 'run':
+        if 'run' in stay:
             return
         begin_battle(user, monster)
 
@@ -159,7 +159,8 @@ def begin_battle(user, creature):
         user.health *= (user.lvl * 1.1)
         user.attack *= (user.lvl * 1.1)
     status(creature)
-    while (user.health > 0 or creature.health > 0):
+    #run = 0
+    while (user.health > 0 or creature.health > 0): #and run != 1:
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
             if chance == 1:
@@ -170,10 +171,11 @@ def begin_battle(user, creature):
                 print("{} missed you.".format(creature.species))
                 turn_counter += 1
         elif turn_counter % 2 == 0:  #user attack
-            option = user_input("Attack or run?\n".lower())
-            if option == "run":
+            option = user_input("Attack or run?\n")
+            if "run" in option:
+                #run = 1
                 break
-            else:
+            elif "attack" in option:
                 pass
             if chance == 1:
                 print("You hit the {} for {} damage.".format(creature.species, user.attack))
