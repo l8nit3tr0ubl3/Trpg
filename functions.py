@@ -35,10 +35,7 @@ def level_up(user):
     user.lvl += 1
     print("You are now level {}".format(user.lvl))
     print(DEC)
-    incrementing_stats = ['health', 'attack']
-    for stat in user.__dict__:
-        if stat in incrementing_stats:
-            stat *= int(float(user.lvl) * 1.1)
+    stats_user(user)
     status(user)
     print(DEC, "\n")
     return user
@@ -83,7 +80,7 @@ def achievement(user, exp, gil, message):
     level up when needed"""
     print(DEC)
     #Show amount earned
-    print("You have gained +{} experience and {} gil!\n{}\n".format(exp, gil, message))
+    print("You have gained +{} experience and +{} gil!\n{}\n".format(exp, gil, message))
     #Add to total
     user.exp += exp
     user.gil += gil
@@ -105,11 +102,9 @@ def travel_map(user, map_number, desc_number):
         choice = user_input(message)
         if len(choice) < 2:
             print("Incorrect option {}.".format(choice))
-            choice = user_input(message)
         random_encounter(user)
         #Incorrect choice, plus random encounter chance
         if map_number[square_counter] != choice[1].strip("'").strip("[").strip("]"):
-            clear(3)
             print("Cannot {}, please try again.\n".format(choice))
         #Correct answer + random encounter chance
         else:
@@ -120,11 +115,8 @@ def travel_map(user, map_number, desc_number):
             square_counter += 1
         #if correct choice counter equals map size, you win
         if square_counter == len(map_number) - 1:
-            print(DEC)
-            print("Congratulations, Dungeon {} complete!".format(map_number[-1:]).strip("'"))
-            print(DEC)
-            break
-    del message
+            output("Congratulations, Dungeon {} complete!".format(map_number[-1:]).strip("'"))
+            return
 
 def random_encounter(user):
     """Call creature battles randomly"""
@@ -142,9 +134,9 @@ def random_encounter(user):
             monster = creatures.Dwarf
         else:
             monster = creatures.Giant
-        print(DEC)
-        print("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
-        print(DEC)
+        output("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
+        stats_creature(user, monster)
+        status(monster)
         stay = user_input("Run, or fight the {}?\n".format(monster.species).lower())
         if 'run' in stay:
             return
@@ -158,19 +150,25 @@ def attack_chance():
         hit = 1
     return hit
 
-def begin_battle(user, creature):
-    """Automated battle sequences"""
-    first_attack = random.randrange(1,10)
-    health_reset = user.health
-    creature_reset = creature.health
+def stats_user(user):
+    if user.lvl > 1:
+        user.health *= int(float(user.lvl) * 1.1)
+        user.attack *= int(float(user.lvl) * 1.1)
+        return user
+    
+def stats_creature(user, creature):
     if user.lvl > 1:
         creature.lvl *= int(float(user.lvl) * 1.2)
         creature.gil *= int(float(user.lvl) * 1.2)
         creature.attack *= int(float(user.lvl) * 1.2)
         creature.health *= int(float(user.lvl) * 1.2)
-        user.health *= int(float(user.lvl) * 1.1)
-        user.attack *= int(float(user.lvl) * 1.1)
-    status(creature)
+    return creature
+
+def begin_battle(user, creature):
+    """Automated battle sequences"""
+    first_attack = random.randrange(1,10)
+    health_reset = user.health
+    creature_reset = creature.health
     if first_attack < 7:
         turn_counter = 2
         print("You surprised the {} and attack first.".format(creature.species))
@@ -192,7 +190,7 @@ def begin_battle(user, creature):
             if "attack" in option:
                 pass
             elif "run" in option:
-                break
+                return
             if chance == 1:
                 print("You hit the {} for {} damage.".format(creature.species, user.attack))
                 creature.health -= user.attack
@@ -209,9 +207,9 @@ def begin_battle(user, creature):
         elif creature.health <= 0:
             print(DEC)
             print("You have defeated the {}!".format(creature.species))
+            user.health = health_reset
+            creature.health = creature_reset
             achievement(user, creature.exp, creature.gil, "")
-            break
-    user.health = health_reset
-    creature.health = creature_reset
+            return
     turn_counter = 0
     clear(6)

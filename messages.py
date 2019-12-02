@@ -18,7 +18,7 @@ Battle Commands: attack, run
 intro = """
 You wake up in a dark forest. Sore, bleeding, and
 dizzy you stand up. You have no memory of how
-you've gotten here. You step outside, and see a
+you've gotten here. You look around, and see a
 path in front of you.
 """
 
