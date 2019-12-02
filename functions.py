@@ -5,8 +5,6 @@ from os import system, name
 from time import sleep
 import random
 import sys
-import matplotlib.pyplot as plot
-import matplotlib.image as image
 import creatures
 
 DIRECTIONS = ["left", "right", "forward", "backward"]
@@ -20,7 +18,9 @@ def status(user):
     """pull all user stats into a string"""
     stats = str(user.__dict__)
     #Print it nicely, multi-lined
+    print(DEC)
     print(stats.replace(",", "\n").strip("{").strip("}"), "\n")
+    print(DEC)
 
 def level_up(user):
     """Used to increase a users level and stats"""
@@ -32,9 +32,10 @@ def level_up(user):
     incrementing_stats = ['health', 'attack']
     for stat in user.__dict__:
         if stat in incrementing_stats:
-            stat *= user.lvl
+            stat *= (user.lvl * 1.1)
     status(user)
     print(DEC, "\n")
+    return user
 
 def clear(time):
     """Used to clear screen for readability"""
@@ -45,11 +46,6 @@ def clear(time):
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
-
-def show_image(picture):#########FIX ME
-    """Display images to user"""
-    read = image.imread(picture)
-    plot.imshow(read)
 
 def user_input(message):
     """Get and sanitize user input"""
@@ -73,6 +69,21 @@ def user_input(message):
         else:
             print("Command {} not acceptable.".format(command))
 
+def achievement(user, exp, gil, message):
+    """Assign exp to an achievement, and call
+    level up when needed"""
+    print(DEC)
+    #Show amount earned
+    print("You have gained +{} experience and {} gil! - {}".format(exp, gil, message))
+    #Add to total
+    user.exp += exp
+    user.gil += gil
+    #Display total
+    print("Total Experience: {}".format(user.exp))
+    print("Total Gil: {}".format(user.gil))
+    print(DEC)
+    if user.exp >= int((10 * user.lvl) * (1.2 * user.lvl)): #leveling algo
+        level_up(user)
 ###########################################################
 # Game core functions
 ###########################################################
@@ -91,11 +102,15 @@ def travel_map(user, map_number, desc_number):
         #Correct answer + random encounter chance
         else:
             clear(3)
-            print(desc_number[square_counter], "\n")
+            print(DEC)
+            print(desc_number[square_counter])
+            print(DEC, "\n")
             square_counter += 1
         #if correct choice counter equals map size, you win
         if square_counter == len(map_number) - 1:
+            print(DEC)
             print("Congratulations, Dungeon {} complete!".format(map_number[-1:]).strip("'"))
+            print(DEC)
             break
     del message
 
@@ -115,11 +130,9 @@ def random_encounter(user):
             monster = creatures.Dwarf
         else:
             monster = creatures.Giant
+        print(DEC)
         print("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
-        monster.lvl *= int(user.lvl * 1.2)
-        monster.gil *= int(user.lvl * 1.2)
-        monster.attack *= int(user.lvl * 1.2)
-        monster.health *= int(user.lvl * 1.2)
+        print(DEC)
         stay = user_input("Run, or fight the {}?\n".format(monster.species).lower())
         if stay == 'run':
             return
@@ -135,11 +148,18 @@ def attack_chance():
 
 def begin_battle(user, creature):
     """Automated battle sequences"""
-    status(creature)
     turn_counter = 1
     health_reset = user.health
     creature_reset = creature.health
-    while user.health > 0 or creature.health > 0:
+    if user.lvl > 1:
+        creature.lvl *= int(user.lvl * 1.2)
+        creature.gil *= int(user.lvl * 1.2)
+        creature.attack *= int(user.lvl * 1.2)
+        creature.health *= int(user.lvl * 1.2)
+        user.health *= (user.lvl * 1.1)
+        user.attack *= (user.lvl * 1.1)
+    status(creature)
+    while (user.health > 0 or creature.health > 0):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
             if chance == 1:
@@ -157,32 +177,23 @@ def begin_battle(user, creature):
                 pass
             if chance == 1:
                 print("You hit the {} for {} damage.".format(creature.species, user.attack))
-                creature.health -= 1
+                creature.health -= user.attack
                 turn_counter += 1
             else:
                 print("You missed {}.".format(creature.species))
                 turn_counter += 1
         if user.health <= 0:
+            print(DEC)
             print("You have been beaten, the world goes dark.")
             print("You have lost the game.")
+            print(DEC)
             sys.exit()
         elif creature.health <= 0:
+            print(DEC)
             print("You have defeated the {}!".format(creature.species))
+            achievement(user, creature.exp, creature.gil, "")
             break
     user.health = health_reset
     creature.health = creature_reset
     turn_counter = 0
     clear(6)
-
-def achievement(user, exp, message):
-    """Assign exp to an achievement, and call
-    level up when needed"""
-    print(DEC)
-    #Show amount earned
-    print("You have gained +{} experience! - {}".format(exp, message))
-    #Add to total
-    user.exp += exp
-    #Display total
-    print("Total Experience: {}".format(user.exp))
-    if user.exp >= int((10 * user.lvl) * (1.2 * user.lvl)): #leveling algo
-        level_up(user)
