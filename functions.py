@@ -191,8 +191,8 @@ def begin_battle(user, creature):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
             if chance == 1:
-                print("{} hits you for {} damage".format(creature.species, creature.attack))
-                user.health -= int(creature.attack - user.defense)
+                print("{} hits you for {} damage".format(creature.species, (creature.attack - user.defense)))
+                user.health -= (creature.attack - user.defense)
                 turn_counter += 1
             else:
                 print("{} missed you.".format(creature.species))
@@ -204,8 +204,8 @@ def begin_battle(user, creature):
             elif "run" in option:
                 return
             if chance == 1:
-                print("You hit the {} for {} damage.".format(creature.species, user.attack))
-                creature.health -= int(user.attack - creature.defense)
+                print("You hit the {} for {} damage.".format(creature.species, (user.attack - creature.defense)))
+                creature.health -= (user.attack - creature.defense)
                 turn_counter += 1
             else:
                 print("You missed {}.".format(creature.species))
