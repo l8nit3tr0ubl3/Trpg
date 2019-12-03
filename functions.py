@@ -103,9 +103,8 @@ def stats_user(user):
             counter += 1
         modifier = float(str(counter) + "." + str(user.lvl))
         for stat in increase_list:
-            float(stat)
+            round(stat)
             stat *= modifier
-            int(stat)
         return user
     
 def stats_creature(user, creature):
@@ -120,9 +119,8 @@ def stats_creature(user, creature):
             counter += 1
         modifier = float(str(counter) + "." + str(user.lvl + 1))
         for stat in increase_list:
-            float(stat)
+            round(stat)
             stat *= modifier
-            int(stat)    
         creature.lvl *= user.lvl
     return creature
 
@@ -216,8 +214,12 @@ def begin_battle(user, creature):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
             if chance == 1:
-                print("The {} hits you for {} damage".format(creature.species, (creature.attack - user.defense)))
-                user.health -= (creature.attack - user.defense)
+                damage = (creature.attack - user.defense)
+                if damage < 0:
+                    print("Blocked all damage with defense stat")
+                    damage = 0
+                print("The {} hits you for {} damage".format(creature.species, damage))
+                user.health -= damage
                 turn_counter += 1
             else:
                 print("The {} missed you.".format(creature.species))
@@ -227,10 +229,14 @@ def begin_battle(user, creature):
             if "attack" in option:
                 pass
             elif "run" in option:
-                return
+                break
             if chance == 1:
-                print("You hit the {} for {} damage.".format(creature.species, (user.attack - creature.defense)))
-                creature.health -= (user.attack - creature.defense)
+                damage = (user.attack - creature.defense)
+                if damage < 0:
+                    print("Blocked all damage with defense stat")
+                    damage = 0
+                print("You hit the {} for {} damage.".format(creature.species, damage))
+                creature.health -= damage
                 turn_counter += 1
             else:
                 print("You missed the {}.".format(creature.species))
@@ -247,6 +253,6 @@ def begin_battle(user, creature):
             user.health = health_reset
             creature.health = creature_reset
             achievement(user, creature.exp, creature.gil, "")
-            return
+            break
     turn_counter = 0
     clear(6)
