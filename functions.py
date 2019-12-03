@@ -10,7 +10,7 @@ import creatures
 DIRECTIONS = ["left", "right", "forward", "backward"]
 COMMANDS = ["walk", "look", "fight", "grab", "unlock"]
 BATTLE_COMMANDS = ["run", "fight", "attack"]
-DEC = "-------------------------------------------------"
+DEC = "-" * 75
 ###########################################################
 # System functions
 ###########################################################
@@ -93,20 +93,29 @@ def achievement(user, exp, gil, message):
 ###########################################################
 # Game core functions
 ###########################################################
+def check_command(user, map_number, square_counter):
+    message = "What do you do?\n"
+    choice = user_input(message)
+    if len(choice) < 2:
+        print("Incorrect option {}.".format(choice))
+        random_encounter(user)
+        return 0
+    #Incorrect choice, plus random encounter chance
+    if map_number[square_counter] != choice[1].strip("'").strip("[").strip("]"):
+        print("Cannot {}, please try again.\n".format(choice))
+        random_encounter(user)
+        return 0
+    else:
+        random_encounter(user)
+    return 1
 def travel_map(user, map_number, desc_number):
     """Loop through map directions, calling encounters"""
-    message = "What do you do?\n"
     square_counter = 0 #counter
     #Loop until correct steps # >= length of map
     while square_counter < len(map_number) - 1:
-        choice = user_input(message)
-        if len(choice) < 2:
-            print("Incorrect option {}.".format(choice))
-        random_encounter(user)
-        #Incorrect choice, plus random encounter chance
-        if map_number[square_counter] != choice[1].strip("'").strip("[").strip("]"):
-            print("Cannot {}, please try again.\n".format(choice))
         #Correct answer + random encounter chance
+        while check_command(user, map_number, square_counter) == 0:
+            check_command(user, map_number, square_counter)
         else:
             clear(3)
             print(DEC)
@@ -154,22 +163,25 @@ def stats_user(user):
     if user.lvl > 1:
         user.health *= int(float(user.lvl) * 1.1)
         user.attack *= int(float(user.lvl) * 1.1)
+        user.defense *= int(float(user.lvl) * 1.1)
+        user.speed *= int(float(user.lvl) * 1.1)
         return user
     
 def stats_creature(user, creature):
     if user.lvl > 1:
-        creature.lvl *= int(float(user.lvl) * 1.2)
+        creature.health *= (float(user.lvl) * 1.2)
+        creature.attack *= (float(user.lvl) * 1.2)
+        creature.defense *= (float(user.lvl) * 1.2)
+        creature.speed *= (float(user.lvl) * 1.2)
+        creature.lvl *= user.lvl
         creature.gil *= int(float(user.lvl) * 1.2)
-        creature.attack *= int(float(user.lvl) * 1.2)
-        creature.health *= int(float(user.lvl) * 1.2)
     return creature
 
 def begin_battle(user, creature):
     """Automated battle sequences"""
-    first_attack = random.randrange(1,10)
     health_reset = user.health
     creature_reset = creature.health
-    if first_attack < 7:
+    if float(user.speed) <= creature.speed:
         turn_counter = 2
         print("You surprised the {} and attack first.".format(creature.species))
     else:
@@ -180,7 +192,7 @@ def begin_battle(user, creature):
         if turn_counter % 2 != 0:  #creature attack
             if chance == 1:
                 print("{} hits you for {} damage".format(creature.species, creature.attack))
-                user.health -= creature.attack
+                user.health -= int(creature.attack - user.defense)
                 turn_counter += 1
             else:
                 print("{} missed you.".format(creature.species))
@@ -193,7 +205,7 @@ def begin_battle(user, creature):
                 return
             if chance == 1:
                 print("You hit the {} for {} damage.".format(creature.species, user.attack))
-                creature.health -= user.attack
+                creature.health -= int(user.attack - creature.defense)
                 turn_counter += 1
             else:
                 print("You missed {}.".format(creature.species))

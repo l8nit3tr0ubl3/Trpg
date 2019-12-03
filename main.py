@@ -17,15 +17,15 @@ func.clear(0)
 func.output("Chracter Classes")
 
 #Show character menu
-print("#", "Job   ", "Ability", "Health", "Attack", "Exp", "LVL", "Gil")
+print("#", "Job   ", "Ability", "Health", "Attack", "Defense", "Speed")
 print("1", CC.Cleric.job, CC.Cleric.ability, "  ", CC.Cleric.health, " "*3,
-      CC.Cleric.attack, " "*4, CC.Cleric.exp, " ", CC.Cleric.lvl, " ", CC.Cleric.gil)
+      CC.Cleric.attack, " "*4, CC.Cleric.defense, " "*5, CC.Cleric.speed)
 print("2", CC.Brute.job, "", CC.Brute.ability, " ", CC.Brute.health, " "*3,
-      CC.Brute.attack, " "*4, CC.Brute.exp, " ", CC.Brute.lvl, " ", CC.Brute.gil)
+      CC.Brute.attack, " "*4, CC.Brute.defense, " "*5, CC.Brute.speed)
 print("3", CC.Mage.job, " ", CC.Mage.ability, " ", CC.Mage.health, " "*3,
-      CC.Mage.attack, " "*4, CC.Mage.exp, " ", CC.Mage.lvl, " ", CC.Mage.gil)
+      CC.Mage.attack, " "*4, CC.Mage.defense, " "*5, CC.Mage.speed)
 print("4", CC.Knight.job, CC.Knight.ability, "", CC.Knight.health, " "*3,
-      CC.Knight.attack, " "*4, CC.Knight.exp, " ", CC.Knight.lvl, " ", CC.Knight.gil)
+      CC.Knight.attack, " "*4, CC.Knight.defense, " "*5, CC.Knight.speed)
 
 #Get USERs character choice and name
 _CLASS = input("\nChoose character class number.\n")
