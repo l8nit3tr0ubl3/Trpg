@@ -20,13 +20,17 @@ func.output("Chracter Classes")
 #Show character menu
 print("#", "Job   ", "Ability", "Health", "Attack", "Defense", "Speed")
 print("1", CC.Cleric.job, CC.Cleric.ability, "  ", round((CC.Cleric.health*0.1), 2), " ",
-      round((CC.Cleric.attack*0.1), 2), " "*2, round((CC.Cleric.defense*0.1), 2), " "*3, round((CC.Cleric.speed*0.1), 2))
+      round((CC.Cleric.attack*0.1), 2), " "*2, round((CC.Cleric.defense*0.1), 2),
+      " "*3, round((CC.Cleric.speed*0.1), 2))
 print("2", CC.Brute.job, "", CC.Brute.ability, " ", round((CC.Brute.health*0.1), 2), " ",
-      round((CC.Brute.attack*0.1), 2), " "*2, round((CC.Brute.defense*0.1), 2), " "*3, round((CC.Brute.speed*0.1), 2))
+      round((CC.Brute.attack*0.1), 2), " "*2, round((CC.Brute.defense*0.1), 2),
+      " "*3, round((CC.Brute.speed*0.1), 2))
 print("3", CC.Mage.job, " ", CC.Mage.ability, " ", round((CC.Mage.health*0.1), 2), " ",
-      round((CC.Mage.attack*0.1), 2), " "*2, round((CC.Mage.defense*0.1), 2), " "*3, round((CC.Mage.speed*0.1), 2))
+      round((CC.Mage.attack*0.1), 2), " "*2, round((CC.Mage.defense*0.1), 2),
+      " "*3, round((CC.Mage.speed*0.1), 2))
 print("4", CC.Knight.job, CC.Knight.ability, "", round((CC.Knight.health*0.1), 2), " ",
-      round((CC.Knight.attack*0.1), 2), " "*2, round((CC.Knight.defense*0.1), 2), " "*3, round((CC.Knight.speed*0.1), 2))
+      round((CC.Knight.attack*0.1), 2), " "*2, round((CC.Knight.defense*0.1), 2),
+      " "*3, round((CC.Knight.speed*0.1), 2))
 
 #Get USERs character choice and name
 _CLASS = input("\nChoose character class number.\n")
@@ -63,8 +67,8 @@ MESSAGE = "First Dungeon Complete!"
 func.achievement(USER, 5, 25, MESSAGE)
 func.clear(3)
 
-boss = func.boss_battle(USER, C.map1_boss)
-if boss == 1:
+BOSS = func.boss_battle(USER, C.map1_boss)
+if BOSS == 1:
     func.travel_map(USER, maps.map1, maps.desc1)
 else:
     pass
@@ -78,8 +82,8 @@ MESSAGE = "Second Dungeon Complete!"
 func.achievement(USER, 15, 100, MESSAGE)
 func.clear(3)
 
-boss = func.boss_battle(USER, C.map2_boss)
-if boss == 1:
+BOSS = func.boss_battle(USER, C.map2_boss)
+if BOSS == 1:
     func.travel_map(USER, maps.map2, maps.desc2)
 else:
     pass
@@ -93,8 +97,8 @@ MESSAGE = "Third Dungeon Complete!"
 func.achievement(USER, 50, 225, MESSAGE)
 func.clear(3)
 
-boss = func.boss_battle(USER, C.map3_boss)
-if boss == 1:
+BOSS = func.boss_battle(USER, C.map3_boss)
+if BOSS == 1:
     func.travel_map(USER, maps.map3, maps.desc3)
 else:
     pass
