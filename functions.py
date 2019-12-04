@@ -3,7 +3,6 @@ Needed functions for main
 """
 from os import system, name
 from time import sleep
-import string
 import random
 import sys
 import creatures
@@ -18,9 +17,10 @@ DEC = "-" * 75
 ###########################################################
 def output(message):
     """Nicer output"""
-    print(DEC)
-    print(message)
-    print(DEC)
+    if len(message) > 1:
+        print(DEC)
+        print(message)
+        print(DEC)
 
 def clear(time):
     """Used to clear screen for readability"""
@@ -35,7 +35,9 @@ def clear(time):
 def user_input(message):
     """Get and sanitize user input"""
     ask_user = input(message).split()
-    if len(ask_user) > 1:
+    while len(ask_user) == 0:
+        ask_user = input(message).split()
+    if len(ask_user) >= 2:
         command = ask_user[0].lower()
         if command in COMMANDS:
             pass
@@ -48,7 +50,7 @@ def user_input(message):
         else:
             print("Direction {} not acceptable.".format(direction))
             ask_user = input(message).split()
-    elif len(ask_user) < 2:
+    if len(ask_user) < 2:
         command = ask_user[0].lower()
         if command in BATTLE_COMMANDS:
             pass
@@ -58,6 +60,7 @@ def user_input(message):
     return ask_user
 
 def check_command(user, map_number, square_counter):
+    """get and check movement input"""
     message = "What do you do?\n"
     choice = user_input(message)
     if len(choice) < 2:
@@ -69,8 +72,7 @@ def check_command(user, map_number, square_counter):
         print("Cannot {}, please try again.\n".format(choice))
         random_encounter(user)
         return 0
-    else:
-        random_encounter(user)
+    random_encounter(user)
     return 1
 
 ###########################################################
@@ -91,37 +93,31 @@ def achievement(user, exp, gil, message):
     print(DEC)
     if user.exp >= int((10 * user.lvl) * (int(1.2 * float(user.lvl)))): #leveling algo
         level_up(user)
-        
+    return user
+
 def stats_user(user):
-    counter = 1
-    if user.lvl >= 1:
-        increase_list = [user.health,
-                         user.attack,
-                         user.defense,
-                         user.speed]
-        if user.lvl % 10 == 0:
-            counter += 1
-        modifier = float(str(counter) + "." + str(user.lvl))
-        for stat in increase_list:
-            round(stat)
-            stat *= modifier
-        return user
-    
+    """Increment user stats """
+    modifier = float(str(0) + "." + str(user.lvl))
+    if user.lvl > 10:
+        modifier = float(str(((user.lvl / 10) + 1) + "." + str(user.lvl / 10)))
+    user.health = int(user.health * modifier)
+    user.attack = int(user.attack * modifier)
+    user.defense = int(user.defense * modifier)
+    user.speed = int(user.speed * modifier)
+    return user
+
 def stats_creature(user, creature):
-    counter = 1
-    if user.lvl >= 1:
-        increase_list = [creature.health,
-                         creature.attack,
-                         creature.defense,
-                         creature.speed,
-                         creature.gil]
-        if user.lvl % 10 == 0:
-            counter += 1
-        modifier = float(str(counter) + "." + str(user.lvl + 1))
-        for stat in increase_list:
-            round(stat)
-            stat *= modifier
-        creature.lvl *= user.lvl
+    """Increment creature stats """
+    modifier = float(str(0) + "." + str(user.lvl))
+    if user.lvl > 10:
+        modifier = float(str(((user.lvl / 10) + 1) + "." + str(user.lvl / 10)))
+    creature.health = int(creature.health * modifier)
+    creature.attack = int(creature.attack * modifier)
+    creature.defense = int(creature.defense * modifier)
+    creature.speed = int(creature.speed * modifier)
+    creature.gil = int(creature.gil * modifier)
+    creature.lvl = user.lvl
+    status(creature)
     return creature
 
 def status(user):
@@ -156,17 +152,15 @@ def travel_map(user, map_number, desc_number):
     #Loop until correct steps # >= length of map
     while square_counter < len(map_number) - 1:
         #Correct answer + random encounter chance
-        while check_command(user, map_number, square_counter) == 0:
+        while check_command(user, map_number, square_counter) != 1:
             check_command(user, map_number, square_counter)
-        else:
-            clear(1)
-            if len(desc_number) > 1:
-                output(desc_number[square_counter])
-            square_counter += 1
+        clear(1)
+        if len(desc_number) > 1:
+            output(desc_number[square_counter])
+        square_counter += 1
         #if correct choice counter equals map size, you win
         if square_counter == len(map_number) - 1:
             output("Congratulations, Dungeon {} complete!".format(map_number[-1:]).strip("'"))
-            return
 
 def random_encounter(user):
     """Call creature battles randomly"""
@@ -185,12 +179,12 @@ def random_encounter(user):
         else:
             monster = creatures.Giant
         output("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
-        stats_creature(user, monster)
-        status(monster)
+        monster = stats_creature(user, monster)
         stay = user_input("Run, or fight the {}?\n".format(monster.species).lower())
         if 'run' in stay:
             return
-        begin_battle(user, monster)
+        user = stats_user(user)
+        begin_battle(user, monster, 0)
 
 def attack_chance():
     """Whether attack hits or misses"""
@@ -200,59 +194,101 @@ def attack_chance():
         hit = 1
     return hit
 
-def begin_battle(user, creature):
-    """Automated battle sequences"""
-    health_reset = user.health
-    creature_reset = creature.health
+def first_attack(user, creature):
+    """determine first attack by speed"""
+    turn_counter = 0
     if float(user.speed) <= creature.speed:
         turn_counter = 2
         print("You surprised the {} and attack first.".format(creature.species))
     else:
         turn_counter = 1
         print("The {} got the drop on you and attacks first.".format(creature.species))
+    return turn_counter
+
+def check_health(user, creature, boss):
+    """Determine winner of battle"""
+    health_reset = user.health
+    creature_reset = creature.health
+    if user.health <= 0 and boss == 0:
+        print(DEC)
+        print("You have been beaten, the world goes dark.")
+        print("You have lost the game.")
+        print(DEC)
+        sys.exit()
+    if creature.health <= 0:
+        print(DEC)
+        print("You have defeated the {}!".format(creature.species))
+        user.health = health_reset
+        creature.health = creature_reset
+        achievement(user, creature.exp, creature.gil, "")
+        return 1
+    if user.health <= 0 and boss == 1:
+        return 2
+    return 0
+
+def creature_attack(user, creature, chance, turn_counter):
+    """Creature attack code"""
+    if chance == 1:
+        damage = (creature.attack - user.defense)
+        if damage <= 0.0:
+            damage = 0.1
+        print("The {} hits you for {} damage".format(creature.species, damage))
+        user.health -= damage
+        turn_counter += 1
+    else:
+        print("The {} missed you.".format(creature.species))
+        turn_counter += 1
+    return turn_counter
+
+def user_attack(user, creature, chance, turn_counter):
+    """User attack code"""
+    if chance == 1:
+        damage = (user.attack - creature.defense)
+        if damage <= 0.0:
+            damage = 0.1
+        print("You hit the {} for {} damage.".format(creature.species, damage))
+        creature.health -= damage
+        turn_counter += 1
+    else:
+        print("You missed the {}.".format(creature.species))
+        turn_counter += 1
+    return turn_counter
+
+def begin_battle(user, creature, boss):
+    """Automated battle sequences"""
+    dead = 0
+    turn_counter = first_attack(user, creature)
     while (user.health > 0 or creature.health > 0):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
-            if chance == 1:
-                damage = (creature.attack - user.defense)
-                if damage < 0:
-                    print("Blocked all damage with defense stat")
-                    damage = 0
-                print("The {} hits you for {} damage".format(creature.species, damage))
-                user.health -= damage
-                turn_counter += 1
-            else:
-                print("The {} missed you.".format(creature.species))
-                turn_counter += 1
+            creature_attack(user, creature, chance, turn_counter)
         elif turn_counter % 2 == 0:  #user attack
             option = user_input("Attack or run?\n")
             if "attack" in option:
                 pass
             elif "run" in option:
                 break
-            if chance == 1:
-                damage = (user.attack - creature.defense)
-                if damage < 0:
-                    print("Blocked all damage with defense stat")
-                    damage = 0
-                print("You hit the {} for {} damage.".format(creature.species, damage))
-                creature.health -= damage
-                turn_counter += 1
-            else:
-                print("You missed the {}.".format(creature.species))
-                turn_counter += 1
-        if user.health <= 0:
-            print(DEC)
-            print("You have been beaten, the world goes dark.")
-            print("You have lost the game.")
-            print(DEC)
-            sys.exit()
-        elif creature.health <= 0:
-            print(DEC)
-            print("You have defeated the {}!".format(creature.species))
-            user.health = health_reset
-            creature.health = creature_reset
-            achievement(user, creature.exp, creature.gil, "")
+            user_attack(user, creature, chance, turn_counter)
+        if check_health(user, creature, boss) == 2:
+            return 1
+        elif check_health(user, creature, boss) == 1:
             break
+        else:
+            pass
     turn_counter = 0
     clear(6)
+
+def boss_battle(user, boss):
+    """Start a boss battle"""
+    print("Boss Incoming!!!")
+    status(boss)
+    stats_creature(user, boss)
+    user = stats_user(user)
+    win = begin_battle(user, boss, 1)
+    complete = 0
+    if win != 1:
+        output("You have defeated the {} boss!".format(boss.species))
+    else:
+        output("You have lost, and been sent back to the start of the dungeon.")
+        complete = 1
+    return complete

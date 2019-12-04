@@ -5,6 +5,7 @@ A fantasy rpg, using classes to define and track characters, monsters, etc.
 #Import all other files and modules
 import maps
 import character_classes as CC
+import creatures as C
 import functions as func
 import messages
 
@@ -18,14 +19,14 @@ func.output("Chracter Classes")
 
 #Show character menu
 print("#", "Job   ", "Ability", "Health", "Attack", "Defense", "Speed")
-print("1", CC.Cleric.job, CC.Cleric.ability, "  ", CC.Cleric.health, " "*3,
-      CC.Cleric.attack, " "*4, CC.Cleric.defense, " "*5, CC.Cleric.speed)
-print("2", CC.Brute.job, "", CC.Brute.ability, " ", CC.Brute.health, " "*3,
-      CC.Brute.attack, " "*4, CC.Brute.defense, " "*5, CC.Brute.speed)
-print("3", CC.Mage.job, " ", CC.Mage.ability, " ", CC.Mage.health, " "*3,
-      CC.Mage.attack, " "*4, CC.Mage.defense, " "*5, CC.Mage.speed)
-print("4", CC.Knight.job, CC.Knight.ability, "", CC.Knight.health, " "*3,
-      CC.Knight.attack, " "*4, CC.Knight.defense, " "*5, CC.Knight.speed)
+print("1", CC.Cleric.job, CC.Cleric.ability, "  ", round((CC.Cleric.health*0.1), 2), " ",
+      round((CC.Cleric.attack*0.1), 2), " "*2, round((CC.Cleric.defense*0.1), 2), " "*3, round((CC.Cleric.speed*0.1), 2))
+print("2", CC.Brute.job, "", CC.Brute.ability, " ", round((CC.Brute.health*0.1), 2), " ",
+      round((CC.Brute.attack*0.1), 2), " "*2, round((CC.Brute.defense*0.1), 2), " "*3, round((CC.Brute.speed*0.1), 2))
+print("3", CC.Mage.job, " ", CC.Mage.ability, " ", round((CC.Mage.health*0.1), 2), " ",
+      round((CC.Mage.attack*0.1), 2), " "*2, round((CC.Mage.defense*0.1), 2), " "*3, round((CC.Mage.speed*0.1), 2))
+print("4", CC.Knight.job, CC.Knight.ability, "", round((CC.Knight.health*0.1), 2), " ",
+      round((CC.Knight.attack*0.1), 2), " "*2, round((CC.Knight.defense*0.1), 2), " "*3, round((CC.Knight.speed*0.1), 2))
 
 #Get USERs character choice and name
 _CLASS = input("\nChoose character class number.\n")
@@ -39,6 +40,7 @@ elif _CLASS == "4":
     USER = CC.Knight
 else:
     print("Incorrect value, try again.")
+    _CLASS = input("\nChoose character class number.\n")
 USER.name = input("\nPlease enter your name.\n")
 print(func.DEC)
 func.clear(0)
@@ -48,36 +50,54 @@ func.output("{}, you have chosen {} as your job type.".format(USER.name, USER.jo
 
 #First achievement
 func.achievement(USER, 1, 0, "Begin Your Journey!")
-func.clear(4)
+func.clear(3)
 
 func.output(messages.intro)
 
 #Loop through user input untill map is cleared
 func.travel_map(USER, maps.map1, maps.desc1)
-func.clear(6)
+func.clear(3)
 
 #Second achievement
 MESSAGE = "First Dungeon Complete!"
 func.achievement(USER, 5, 25, MESSAGE)
-func.clear(4)
+func.clear(3)
+
+boss = func.boss_battle(USER, C.map1_boss)
+if boss == 1:
+    func.travel_map(USER, maps.map1, maps.desc1)
+else:
+    pass
 
 func.output(messages.end_level1)
 
 func.travel_map(USER, maps.map2, maps.desc2)
-func.clear(6)
+func.clear(3)
 
 MESSAGE = "Second Dungeon Complete!"
 func.achievement(USER, 15, 100, MESSAGE)
-func.clear(4)
+func.clear(3)
+
+boss = func.boss_battle(USER, C.map2_boss)
+if boss == 1:
+    func.travel_map(USER, maps.map2, maps.desc2)
+else:
+    pass
 
 func.output(messages.end_level2)
 
 func.travel_map(USER, maps.map3, maps.desc3)
-func.clear(6)
+func.clear(3)
 
 MESSAGE = "Third Dungeon Complete!"
 func.achievement(USER, 50, 225, MESSAGE)
-func.clear(4)
+func.clear(3)
+
+boss = func.boss_battle(USER, C.map3_boss)
+if boss == 1:
+    func.travel_map(USER, maps.map3, maps.desc3)
+else:
+    pass
 
 ####################################################
 func.output(messages.endgame)

@@ -16,7 +16,7 @@ class Character():
         self.lvl = lvl
         self.gil = gil
 
-Cleric = Character(character_name, "Cleric", "Heal", 12, 2, 1, 2, 0, 1, 0)
-Brute = Character(character_name, "Brute", "Smash", 10, 3, 3, 1, 0, 1, 0)
-Mage = Character(character_name, "Mage", "Flame", 18, 1, 3, 4, 0, 1, 0)
-Knight = Character(character_name, "Knight", "Defend", 13, 4, 2, 1, 0, 1, 0)
+Cleric = Character(character_name, "Cleric", "Heal", 120, 30, 12, 13, 0, 1, 0)
+Brute = Character(character_name, "Brute", "Smash", 100, 26, 10, 11, 0, 1, 0)
+Mage = Character(character_name, "Mage", "Flame", 180, 21, 16, 15, 0, 1, 0)
+Knight = Character(character_name, "Knight", "Defend", 130, 32, 11, 12, 0, 1, 0)

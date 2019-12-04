@@ -13,7 +13,13 @@ class Monster():
         self.gil = gil
         self.exp = exp
 
-Troll = Monster("Troll", 4, 1, 1, 0.2, "Small Axe", 1, 1, 1)
-Elf = Monster("Elf", 6, 1.5, 1, 1.2, "Bow", 1, 5, 3)
-Dwarf = Monster("Dwarf", 9, 2.7, 0.8, 1.7, "Battle Axe", 1, 10, 3)
-Giant = Monster("Giant", 20, 4.9, 1.8, 1, "Boulder", 1, 100, 20)
+#Standard creature
+Troll = Monster("Troll", 50, 18, 11, 10, "Small_Axe", 1, 1, 1)
+Elf = Monster("Elf", 80, 21, 13, 15, "Bow", 1, 5, 3)
+Dwarf = Monster("Dwarf",110, 22, 15, 10, "Battle_Axe", 1, 10, 3)
+Giant = Monster("Giant", 250, 27, 13, 16, "Boulder", 1, 100, 20)
+
+#BOSSES
+map1_boss = Monster("Ent Warrior", 60, 4, 3, 6, "Large_Branch", 1, 100, 50)
+map2_boss = Monster("Spider Queen", 180, 12, 5, 9, "Fangs", 1, 250, 150)
+map3_boss = Monster("Crazed ciizen", 540, 30, 12, 20, "Headbutt", 1, 400, 230)
