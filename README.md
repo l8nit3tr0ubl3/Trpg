@@ -12,3 +12,7 @@
 -Interactive battle sequences, random hit/miss chance  
 -Clear screen after each occurence for readability  
 -Skippable battles  
+-Defense stat that mods battles  
+-Speed stat that mods battles  
+-Boss battles between dungeons  
+-Force re-run dungeon when losing to boss  
