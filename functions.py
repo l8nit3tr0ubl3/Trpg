@@ -226,7 +226,7 @@ def check_health(user, creature, boss):
         return 2
     return 0
 
-def creature_attack(user, creature, chance, turn_counter):
+def creature_attack(user, creature, chance):
     """Creature attack code"""
     if chance == 1:
         damage = (creature.attack - user.defense)
@@ -234,13 +234,10 @@ def creature_attack(user, creature, chance, turn_counter):
             damage = 0.1
         print("The {} hits you for {} damage".format(creature.species, damage))
         user.health -= damage
-        turn_counter += 1
     else:
         print("The {} missed you.".format(creature.species))
-        turn_counter += 1
-    return turn_counter
 
-def user_attack(user, creature, chance, turn_counter):
+def user_attack(user, creature, chance):
     """User attack code"""
     if chance == 1:
         damage = (user.attack - creature.defense)
@@ -248,11 +245,8 @@ def user_attack(user, creature, chance, turn_counter):
             damage = 0.1
         print("You hit the {} for {} damage.".format(creature.species, damage))
         creature.health -= damage
-        turn_counter += 1
     else:
         print("You missed the {}.".format(creature.species))
-        turn_counter += 1
-    return turn_counter
 
 def begin_battle(user, creature, boss):
     """Automated battle sequences"""
@@ -261,17 +255,21 @@ def begin_battle(user, creature, boss):
     while (user.health > 0 or creature.health > 0):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
-            creature_attack(user, creature, chance, turn_counter)
+            creature_attack(user, creature, chance)
         elif turn_counter % 2 == 0:  #user attack
             option = user_input("Attack or run?\n")
             if "attack" in option:
                 pass
             elif "run" in option:
                 break
-            user_attack(user, creature, chance, turn_counter)
-        if check_health(user, creature, boss) == 2:
+            elif option not in BATTLE_COMMANDS:
+                option = user_input("Attack or run?\n")
+            user_attack(user, creature, chance)
+        result = check_health(user, creature, boss)
+        turn_counter += 1
+        if result == 2:
             return 1
-        elif check_health(user, creature, boss) == 1:
+        elif result == 1:
             break
         else:
             pass
@@ -281,7 +279,6 @@ def begin_battle(user, creature, boss):
 def boss_battle(user, boss):
     """Start a boss battle"""
     print("Boss Incoming!!!")
-    status(boss)
     stats_creature(user, boss)
     user = stats_user(user)
     win = begin_battle(user, boss, 1)
@@ -289,6 +286,8 @@ def boss_battle(user, boss):
     if win != 1:
         output("You have defeated the {} boss!".format(boss.species))
     else:
-        output("You have lost, and been sent back to the start of the dungeon.")
+        output("You have lost, and been sent back to the start of the level.")
         complete = 1
+        clear(3)
+        output("You are back at the beginning of the level.")
     return complete
