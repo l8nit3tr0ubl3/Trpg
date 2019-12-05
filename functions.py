@@ -125,27 +125,27 @@ def level_up(user):
 
 def stats_creature(user, creature):
     """Increment creature stats """
-    modifier = float(str(0) + "." + str(user.lvl))
-    if user.lvl > 10:
-        modifier = float(str(((user.lvl / 10) + 1) + "." + str(user.lvl / 10)))
-    creature.health = int(creature.health * modifier)
-    creature.attack = int(creature.attack * modifier)
-    creature.defense = int(creature.defense * modifier)
-    creature.speed = int(creature.speed * modifier)
-    creature.gil = int(creature.gil * modifier)
+    stats = [creature.health,
+             creature.attack,
+             creature.defense,
+             creature.speed,
+             creature.gil,
+             creature.exp
+             ]
+    for stat in stats:
+        stat *= (user.lvl * 1.2)
     creature.lvl = user.lvl
     status(creature)
     return creature
 
 def stats_user(user):
     """Increment user stats """
-    modifier = float(str(0) + "." + str(user.lvl))
-    if user.lvl > 10:
-        modifier = float(str(((user.lvl / 10) + 1) + "." + str(user.lvl / 10)))
-    user.health = int(user.health * modifier)
-    user.attack = int(user.attack * modifier)
-    user.defense = int(user.defense * modifier)
-    user.speed = int(user.speed * modifier)
+    stats = [user.health,
+             user.attack,
+             user.defense,
+             user.speed]
+    for stat in stats:
+        stat *= (user.lvl * 1.1)
     return user
 
 def status(user):

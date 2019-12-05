@@ -55,24 +55,20 @@ func.output("{}, you have chosen {} as your job type.".format(USER.name, USER.jo
 #First achievement
 func.achievement(USER, 1, 0, "Begin Your Journey!")
 func.clear(3)
-
 func.output(messages.intro)
 
 #Loop through user input untill map is cleared
 func.travel_map(USER, maps.map1, maps.desc1)
 func.clear(3)
-
 #Second achievement
 MESSAGE = "First Dungeon Complete!"
 func.achievement(USER, 5, 25, MESSAGE)
 func.clear(3)
-
 BOSS = func.boss_battle(USER, C.map1_boss)
 if BOSS == 1:
     func.travel_map(USER, maps.map1, maps.desc1)
 else:
     pass
-
 func.output(messages.end_level1)
 
 func.travel_map(USER, maps.map2, maps.desc2)
