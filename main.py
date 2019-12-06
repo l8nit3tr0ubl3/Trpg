@@ -19,18 +19,14 @@ func.output("Chracter Classes")
 
 #Show character menu
 print("#", "Job   ", "Ability", "Health", "Attack", "Defense", "Speed")
-print("1", CC.Cleric.job, CC.Cleric.ability, "  ", round((CC.Cleric.health*0.1), 2), " ",
-      round((CC.Cleric.attack*0.1), 2), " "*2, round((CC.Cleric.defense*0.1), 2),
-      " "*3, round((CC.Cleric.speed*0.1), 2))
-print("2", CC.Brute.job, "", CC.Brute.ability, " ", round((CC.Brute.health*0.1), 2), " ",
-      round((CC.Brute.attack*0.1), 2), " "*2, round((CC.Brute.defense*0.1), 2),
-      " "*3, round((CC.Brute.speed*0.1), 2))
-print("3", CC.Mage.job, " ", CC.Mage.ability, " ", round((CC.Mage.health*0.1), 2), " ",
-      round((CC.Mage.attack*0.1), 2), " "*2, round((CC.Mage.defense*0.1), 2),
-      " "*3, round((CC.Mage.speed*0.1), 2))
-print("4", CC.Knight.job, CC.Knight.ability, "", round((CC.Knight.health*0.1), 2), " ",
-      round((CC.Knight.attack*0.1), 2), " "*2, round((CC.Knight.defense*0.1), 2),
-      " "*3, round((CC.Knight.speed*0.1), 2))
+print("1", CC.Cleric.job, CC.Cleric.ability, "  ", CC.Cleric.health, " ",
+      CC.Cleric.attack, " "*2, CC.Cleric.defense, " "*3, CC.Cleric.speed)
+print("2", CC.Brute.job, "", CC.Brute.ability, " ", CC.Brute.health, " ",
+      CC.Brute.attack, " "*2, CC.Brute.defense, " "*3, CC.Brute.speed)
+print("3", CC.Mage.job, " ", CC.Mage.ability, " ", CC.Mage.health, " ",
+      CC.Mage.attack, " "*2, CC.Mage.defense, " "*3, CC.Mage.speed)
+print("4", CC.Knight.job, CC.Knight.ability, "", CC.Knight.health, " ",
+      CC.Knight.attack, " "*2, CC.Knight.defense, CC.Knight.speed)
 
 #Get USERs character choice and name
 _CLASS = input("\nChoose character class number.\n")

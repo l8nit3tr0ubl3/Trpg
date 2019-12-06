@@ -9,7 +9,7 @@ import creatures
 
 DIRECTIONS = ["left", "right", "forward", "backward"]
 COMMANDS = ["walk", "fight"]
-BATTLE_COMMANDS = ["run", "fight", "attack"]
+BATTLE_COMMANDS = ["run", "fight", "attack", "special"]
 DEC = "-" * 75
 
 ###########################################################
@@ -125,27 +125,21 @@ def level_up(user):
 
 def stats_creature(user, creature):
     """Increment creature stats """
-    stats = [creature.health,
-             creature.attack,
-             creature.defense,
-             creature.speed,
-             creature.gil,
-             creature.exp
-             ]
-    for stat in stats:
-        stat *= (user.lvl * 1.2)
+    creature.health *= (user.lvl + 1.2)
+    creature.attack *= (user.lvl + 1.2)
+    creature.defense *= (user.lvl + 1.2)
+    creature.speed *= (user.lvl + 1.2)
+    creature.exp *= (user.lvl + 1.2)
+    creature.gil *= (user.lvl + 1.2)
     creature.lvl = user.lvl
-    status(creature)
     return creature
 
 def stats_user(user):
     """Increment user stats """
-    stats = [user.health,
-             user.attack,
-             user.defense,
-             user.speed]
-    for stat in stats:
-        stat *= (user.lvl * 1.1)
+    user.health *= (user.lvl + 1.1)
+    user.attack *= (user.lvl + 1.1)
+    user.speed *= (user.lvl + 1.1)
+    user.speed *= (user.lvl + 1.1)
     return user
 
 def status(user):
@@ -171,20 +165,29 @@ def attack_chance():
 
 def begin_battle(user, creature, boss):
     """Automated battle sequences"""
+    remaining_special = user.lvl
+    special = 0
     turn_counter = first_attack(user, creature)
     while (user.health > 0 or creature.health > 0):
         chance = attack_chance()
         if turn_counter % 2 != 0:  #creature attack
             creature_attack(user, creature, chance)
         elif turn_counter % 2 == 0:  #user attack
-            option = user_input("Attack or run?\n")
+            option = user_input("Attack, special or run?\n")
             if "attack" in option:
                 pass
+            elif "special" in option:
+                special = 1
+                if remaining_special <= 0:
+                    output("All special attacks used")
+                    special = 0
+                remaining_special -= 1
             elif "run" in option:
                 break
             elif option not in BATTLE_COMMANDS:
                 option = user_input("Attack or run?\n")
-            user_attack(user, creature, chance)
+            user_attack(user, creature, chance, special)
+            special = 0
         result = check_health(user, creature, boss)
         turn_counter += 1
         if result == 2:
@@ -198,7 +201,7 @@ def boss_battle(user, boss):
     """Start a boss battle"""
     print("Boss Incoming!!!")
     stats_creature(user, boss)
-    user = stats_user(user)
+    #user = stats_user(user)
     win = begin_battle(user, boss, 1)
     complete = 0
     if win != 1:
@@ -257,7 +260,7 @@ def random_encounter(user):
     """Call creature battles randomly"""
     #chance of encounter - random number between 1-100
     chance = random.randrange(1, 100)
-    if chance < 65: # 35% chance of encounter
+    if chance < 55: # 45% chance of encounter
         monster = 0
     else:
         monster_type = random.randrange(1, 10)
@@ -270,20 +273,29 @@ def random_encounter(user):
         else:
             monster = creatures.Giant
         output("You have encountered a level {} {}\n".format(monster.lvl, monster.species))
-        monster = stats_creature(user, monster)
+        if user.lvl > 1:
+            user = stats_user(user)
+            monster = stats_creature(user, monster)
+        status(monster)
         stay = user_input("Run, or fight the {}?\n".format(monster.species).lower())
         if 'run' in stay:
             return
-        user = stats_user(user)
         begin_battle(user, monster, 0)
 
-def user_attack(user, creature, chance):
+def user_attack(user, creature, chance, special):
     """User attack code"""
     if chance == 1:
-        damage = (user.attack - creature.defense)
+        if special == 1:
+            attack = user.attack * 2
+        else:
+            attack = user.attack
+        damage = (attack - creature.defense)
         if damage <= 0.0:
             damage = 0.1
-        print("You hit the {} for {} damage.".format(creature.species, damage))
+        if special == 1:
+            print("You attacked the {} with {} for {} damage.".format(creature.species, user.ability, damage))
+        else:
+            print("You hit the {} for {} damage.".format(creature.species, damage))
         creature.health -= damage
     else:
         print("You missed the {}.".format(creature.species))
