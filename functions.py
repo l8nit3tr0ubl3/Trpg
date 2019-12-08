@@ -159,12 +159,13 @@ def attack_chance():
     """Whether attack hits or misses"""
     hit = 0
     chance = random.randrange(1, 100)
-    if chance < 65:
+    if chance < 85:
         hit = 1
     return hit
 
 def begin_battle(user, creature, boss):
     """Automated battle sequences"""
+    creature_health = creature.health
     remaining_special = user.lvl
     special = 0
     turn_counter = first_attack(user, creature)
@@ -195,6 +196,7 @@ def begin_battle(user, creature, boss):
         elif result == 1:
             break
     turn_counter = 0
+    creature.health = creature_health
     clear(6)
 
 def boss_battle(user, boss):
@@ -259,16 +261,19 @@ def first_attack(user, creature):
 def random_encounter(user):
     """Call creature battles randomly"""
     #chance of encounter - random number between 1-100
+    monster_type = 0
     chance = random.randrange(1, 100)
     if chance < 55: # 45% chance of encounter
         monster = 0
     else:
         monster_type = random.randrange(1, 10)
-        if monster_type < 5:
-            monster = creatures.Troll
-        elif monster_type >= 5 < 7:
-            monster = creatures.Elf
-        elif monster_type >= 7 < 9:
+        if monster_type < 2:
+            monster = creatures.troll
+        elif monster_type >= 2 < 3:
+            monster = creatures.elf
+        elif monster_type >= 3 < 6:
+            monster = creatures.Orc
+        elif monster_type >= 6 < 8:
             monster = creatures.Dwarf
         else:
             monster = creatures.Giant
@@ -281,6 +286,7 @@ def random_encounter(user):
         if 'run' in stay:
             return
         begin_battle(user, monster, 0)
+        monster_type = 0
 
 def user_attack(user, creature, chance, special):
     """User attack code"""
