@@ -268,9 +268,9 @@ def random_encounter(user):
     else:
         monster_type = random.randrange(1, 10)
         if monster_type < 2:
-            monster = creatures.troll
+            monster = creatures.Troll
         elif monster_type >= 2 < 3:
-            monster = creatures.elf
+            monster = creatures.Elf
         elif monster_type >= 3 < 6:
             monster = creatures.Orc
         elif monster_type >= 6 < 8:
