@@ -56,7 +56,7 @@ def travel_map(user, map_number, desc_number):
         #Correct answer + random encounter chance
         while check_command(user, map_number, square_counter) != 1:
             check_command(user, map_number, square_counter)
-        clear(1)
+        #clear(1)
         if len(desc_number) > 1:
             output(desc_number[square_counter])
         square_counter += 1
@@ -166,6 +166,7 @@ def attack_chance():
 def begin_battle(user, creature, boss):
     """Automated battle sequences"""
     creature_health = creature.health
+    ran = 0
     remaining_special = user.lvl
     special = 0
     turn_counter = first_attack(user, creature)
@@ -184,6 +185,7 @@ def begin_battle(user, creature, boss):
                     special = 0
                 remaining_special -= 1
             elif "run" in option:
+                ran = 1
                 break
             elif option not in BATTLE_COMMANDS:
                 option = user_input("Attack or run?\n")
@@ -197,7 +199,9 @@ def begin_battle(user, creature, boss):
             break
     turn_counter = 0
     creature.health = creature_health
-    clear(6)
+    #clear(6)
+    if ran == 1:
+        print("You ran away.")
 
 def boss_battle(user, boss):
     """Start a boss battle"""
@@ -211,7 +215,7 @@ def boss_battle(user, boss):
     else:
         output("You have lost, and been sent back to the start of the level.")
         complete = 1
-        clear(3)
+        #clear(3)
         output("You are back at the beginning of the level.")
     return complete
 
@@ -268,9 +272,9 @@ def random_encounter(user):
     else:
         monster_type = random.randrange(1, 10)
         if monster_type < 2:
-            monster = creatures.troll
+            monster = creatures.Troll
         elif monster_type >= 2 < 3:
-            monster = creatures.elf
+            monster = creatures.Elf
         elif monster_type >= 3 < 6:
             monster = creatures.Orc
         elif monster_type >= 6 < 8:
