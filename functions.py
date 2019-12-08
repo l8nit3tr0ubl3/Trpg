@@ -31,9 +31,9 @@ def check_command(user, map_number, square_counter):
     random_encounter(user)
     return 1
 
-def clear(time):
+def clear():
     """Used to clear screen for readability"""
-    sleep(time)
+    input("Press enter to continue")
     # for windows
     if name == 'nt':
         _ = system('cls')
@@ -56,7 +56,7 @@ def travel_map(user, map_number, desc_number):
         #Correct answer + random encounter chance
         while check_command(user, map_number, square_counter) != 1:
             check_command(user, map_number, square_counter)
-        #clear(1)
+        clear(1)
         if len(desc_number) > 1:
             output(desc_number[square_counter])
         square_counter += 1
@@ -199,7 +199,7 @@ def begin_battle(user, creature, boss):
             break
     turn_counter = 0
     creature.health = creature_health
-    #clear(6)
+    clear(6)
     if ran == 1:
         print("You ran away.")
 
@@ -215,7 +215,7 @@ def boss_battle(user, boss):
     else:
         output("You have lost, and been sent back to the start of the level.")
         complete = 1
-        #clear(3)
+        clear(3)
         output("You are back at the beginning of the level.")
     return complete
 
