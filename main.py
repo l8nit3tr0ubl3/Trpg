@@ -11,8 +11,7 @@ import messages
 
 #Welcome screen
 func.output(messages.welcome)
-input("Press enter to continue......")
-func.clear(0)
+func.clear()
 
 #Title
 func.output("Chracter Classes")
@@ -43,23 +42,23 @@ else:
     _CLASS = input("\nChoose character class number.\n")
 USER.name = input("\nPlease enter your name.\n")
 print(func.DEC)
-func.clear(0)
+func.clear()
 
 #Show chosen charcter type and name
 func.output("{}, you have chosen {} as your job type.".format(USER.name, USER.job))
 
 #First achievement
 func.achievement(USER, 1, 0, "Begin Your Journey!")
-func.clear(3)
+func.clear()
 func.output(messages.intro)
 
 #Loop through user input untill map is cleared
 func.travel_map(USER, maps.map1, maps.desc1)
-func.clear(3)
+func.clear()
 #Second achievement
 MESSAGE = "First Dungeon Complete!"
 func.achievement(USER, 5, 25, MESSAGE)
-func.clear(3)
+func.clear()
 BOSS = func.boss_battle(USER, C.map1_boss)
 if BOSS == 1:
     func.travel_map(USER, maps.map1, maps.desc1)
@@ -68,11 +67,11 @@ else:
 func.output(messages.end_level1)
 
 func.travel_map(USER, maps.map2, maps.desc2)
-func.clear(3)
+func.clear()
 
 MESSAGE = "Second Dungeon Complete!"
 func.achievement(USER, 15, 100, MESSAGE)
-func.clear(3)
+func.clear()
 
 BOSS = func.boss_battle(USER, C.map2_boss)
 if BOSS == 1:
@@ -83,11 +82,11 @@ else:
 func.output(messages.end_level2)
 
 func.travel_map(USER, maps.map3, maps.desc3)
-func.clear(3)
+func.clear()
 
 MESSAGE = "Third Dungeon Complete!"
 func.achievement(USER, 50, 225, MESSAGE)
-func.clear(3)
+func.clear()
 
 BOSS = func.boss_battle(USER, C.map3_boss)
 if BOSS == 1:
@@ -98,4 +97,4 @@ else:
 ####################################################
 func.output(messages.endgame)
 func.status(USER)
-func.clear(25)
+func.clear()
