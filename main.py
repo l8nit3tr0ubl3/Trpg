@@ -26,6 +26,10 @@ print("3", CC.Mage.job, " ", CC.Mage.ability, " ", CC.Mage.health, " ",
       CC.Mage.attack, " "*2, CC.Mage.defense, " "*3, CC.Mage.speed)
 print("4", CC.Knight.job, CC.Knight.ability, "", CC.Knight.health, " ",
       CC.Knight.attack, " "*2, CC.Knight.defense, CC.Knight.speed)
+print("5", CC.Warrior.job, CC.Warrior.ability, "", CC.Warrior.health, " ",
+      CC.Warrior.attack, " "*2, CC.Warrior.defence, CC.Warrior.speed)
+print("6", CC.Warlock.job, CC.Warlock.ability, "", CC.Warlock.health, " "
+      CC.Warlock.attack, " ", *2, CC.Warlock.defence, CC.Warlock.speed)
 
 #Get USERs character choice and name
 _CLASS = input("\nChoose character class number.\n")
@@ -37,6 +41,10 @@ elif _CLASS == "3":
     USER = CC.Mage
 elif _CLASS == "4":
     USER = CC.Knight
+elif _CLASS == "5":
+    USER = CC.Warrior
+elif _CLASS == "6":
+    USER = CC.Warlock
 else:
     print("Incorrect value, try again.")
     _CLASS = input("\nChoose character class number.\n")
