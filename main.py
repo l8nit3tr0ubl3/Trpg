@@ -28,7 +28,7 @@ print("4", CC.Knight.job, CC.Knight.ability, "", CC.Knight.health, " ",
       CC.Knight.attack, " "*2, CC.Knight.defense, CC.Knight.speed)
 print("5", CC.Warrior.job, CC.Warrior.ability, "", CC.Warrior.health, " ",
       CC.Warrior.attack, " "*2, CC.Warrior.defence, CC.Warrior.speed)
-print("6", CC.Warlock.job, CC.Warlock.ability, "", CC.Warlock.health, " "
+print("6", CC.Warlock.job, CC.Warlock.ability, "", CC.Warlock.health, " ",
       CC.Warlock.attack, " ", *2, CC.Warlock.defence, CC.Warlock.speed)
 
 #Get USERs character choice and name
