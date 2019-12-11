@@ -17,19 +17,19 @@ func.clear()
 func.output("Chracter Classes")
 
 #Show character menu
-print("#", "Job   ", "Ability", "Health", "Attack", "Defense", "Speed")
-print("1", CC.Cleric.job, CC.Cleric.ability, "  ", CC.Cleric.health, " ",
-      CC.Cleric.attack, " "*2, CC.Cleric.defense, " "*3, CC.Cleric.speed)
-print("2", CC.Brute.job, "", CC.Brute.ability, " ", CC.Brute.health, " ",
-      CC.Brute.attack, " "*2, CC.Brute.defense, " "*3, CC.Brute.speed)
-print("3", CC.Mage.job, " ", CC.Mage.ability, " ", CC.Mage.health, " ",
-      CC.Mage.attack, " "*2, CC.Mage.defense, " "*3, CC.Mage.speed)
-print("4", CC.Knight.job, CC.Knight.ability, "", CC.Knight.health, " ",
-      CC.Knight.attack, " "*2, CC.Knight.defense, CC.Knight.speed)
-print("5", CC.Warrior.job, CC.Warrior.ability, "", CC.Warrior.health, " ",
-      CC.Warrior.attack, " "*2, CC.Warrior.defence, CC.Warrior.speed)
-print("6", CC.Warlock.job, CC.Warlock.ability, "", CC.Warlock.health, " ",
-      CC.Warlock.attack, " ", *2, CC.Warlock.defence, CC.Warlock.speed)
+print("#", "Job    ", "Ability       ", "Health", "Attack", "Defense", "Speed")
+print("1", CC.Cleric.job, "", CC.Cleric.ability, " "*9, CC.Cleric.health, " "*2,
+      CC.Cleric.attack, " "*3, CC.Cleric.defense, " "*4, CC.Cleric.speed)
+print("2", CC.Brute.job, " ", CC.Brute.ability, " "*8, CC.Brute.health, " "*2,
+      CC.Brute.attack, " "*3, CC.Brute.defense, " "*4, CC.Brute.speed)
+print("3", CC.Mage.job, " "*2, CC.Mage.ability, " "*8, CC.Mage.health, " "*2,
+      CC.Mage.attack, " "*3, CC.Mage.defense, " "*4, CC.Mage.speed)
+print("4", CC.Knight.job, "", CC.Knight.ability, " "*7, CC.Knight.health, " "*2,
+      CC.Knight.attack, " "*3, CC.Knight.defense," "*4, CC.Knight.speed)
+print("5", CC.Warrior.job, CC.Warrior.ability, " "*7, CC.Warrior.health, " "*2,
+      CC.Warrior.attack, " "*3, CC.Warrior.defense, " "*4, CC.Warrior.speed)
+print("6", CC.Warlock.job, CC.Warlock.ability, ""*13, CC.Warlock.health, " "*2,
+      CC.Warlock.attack, " "*3, CC.Warlock.defense, " "*4, CC.Warlock.speed)
 
 #Get USERs character choice and name
 _CLASS = input("\nChoose character class number.\n")
