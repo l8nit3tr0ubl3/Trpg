@@ -53,7 +53,8 @@ map3 = ["forward",
 "left",
 "3"]
 
-desc3 = ["""Entering the city, you see wreckage everywhere, carts
+desc3 = ["Entering the city, only forward is available",
+ """You see wreckage everywhere, carts
 are overturned and there are bodies littering the streets. Only
 right is available.""",
  "You enter a tight alleyway.",
