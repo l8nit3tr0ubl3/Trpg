@@ -8,7 +8,7 @@ map1 = ["forward",
 "forward",
 "right",
 "1"]
-#description of each "square" in map
+#description of each "square" in map1
 desc1 = ["The path continues forward",
  "You see a fork, and can go Right or Left?",
  """You are blocked by bushes on 3 sides.
@@ -17,7 +17,7 @@ Only left is available.""",
  "To your right seems to be an exit.",
  ""]
 
-#Correct directions through map1
+#Correct directions through map2
 map2 = ["forward",
 "forward",
 "right",
@@ -28,7 +28,7 @@ map2 = ["forward",
 "forward",
 "right",
 "2"]
-#description of each "square" in map
+#description of each "square" in map2
 desc2 = ["As you enter the cave, you see a narrow path ahead.",
  "you see a gentle turn to the right.",
  """Climbing through a narrow path you see an underground
